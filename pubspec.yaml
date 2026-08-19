@@ -74,6 +74,9 @@ dependencies:
 
 dependency_overrides:
   intl: any
+  webview_flutter: any
+  webview_flutter_wkwebview: any
+
 
 
 dev_dependencies:
