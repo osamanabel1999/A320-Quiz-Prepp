@@ -73,8 +73,10 @@ dependencies:
   cupertino_icons: ^1.0.0
 
 dependency_overrides:
-  http: 1.4.0
-  uuid: ^4.0.0
+  font_awesome_flutter: 11.0.0
+  page_transition: 2.2.2
+  http: any
+  internet_file: any
 
 dev_dependencies:
   flutter_lints: 4.0.0
