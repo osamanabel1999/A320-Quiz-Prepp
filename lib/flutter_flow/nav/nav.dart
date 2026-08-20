@@ -33,12 +33,32 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       navigatorKey: appNavigatorKey,
-      errorBuilder: (context, state) => HomeWidget(),
+      errorBuilder: (context, state) => appStateNotifier.showSplashImage
+          ? Builder(
+              builder: (context) => Container(
+                color: Colors.transparent,
+                child: Image.asset(
+                  'assets/images/image_D1232338-F796-4170-A65A-8B731A1694C5_1787167386.png',
+                  fit: BoxFit.fill,
+                ),
+              ),
+            )
+          : HomeWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
-          builder: (context, _) => HomeWidget(),
+          builder: (context, _) => appStateNotifier.showSplashImage
+              ? Builder(
+                  builder: (context) => Container(
+                    color: Colors.transparent,
+                    child: Image.asset(
+                      'assets/images/image_D1232338-F796-4170-A65A-8B731A1694C5_1787167386.png',
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                )
+              : HomeWidget(),
         ),
         FFRoute(
           name: QuestionsWidget.routeName,

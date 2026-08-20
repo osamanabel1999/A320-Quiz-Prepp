@@ -393,7 +393,6 @@ class _A320IceAndRainQuizWidgetState extends State<A320IceAndRainQuizWidget> {
   void initState() {
     super.initState();
     _userAnswers = {};
-    // Timer is dynamically set to 1 minute per question based on the list length
     _remainingSeconds = _questions.length * 60;
     _startTimer();
   }
@@ -543,21 +542,37 @@ class _A320IceAndRainQuizWidgetState extends State<A320IceAndRainQuizWidget> {
                       final isCorrect =
                           currentQuestion.correctOptionIndex == index;
 
-                      Color cardColor = const Color(0xFF2D2D44);
-                      Color borderColor = Colors.transparent;
+                      // === تم التعديل هنا لضمان التباين وعدم اختفاء النص ===
+                      Color cardColor;
+                      Color borderColor;
+                      Color textColor;
 
                       if (_isSubmitted) {
                         if (isCorrect) {
-                          cardColor = Colors.green.withOpacity(0.2);
+                          cardColor = Colors.green.withOpacity(0.25);
                           borderColor = Colors.green;
+                          textColor = Colors.white;
                         } else if (isSelected && !isCorrect) {
-                          cardColor = Colors.red.withOpacity(0.2);
+                          cardColor = Colors.red.withOpacity(0.25);
                           borderColor = Colors.red;
+                          textColor = Colors.white;
+                        } else {
+                          // الإجابات غير المختارة بعد التسليم
+                          cardColor = const Color(0xFF2D2D44);
+                          borderColor = Colors.transparent;
+                          textColor = Colors.white54;
                         }
                       } else {
                         if (isSelected) {
-                          borderColor = Colors.blue;
+                          // الإجابة المختارة
                           cardColor = const Color(0xFF3B3B58);
+                          borderColor = Colors.blueAccent;
+                          textColor = Colors.white;
+                        } else {
+                          // الإجابة قبل الاختيار (تم تثبيت الخلفية داكنة والنص أبيض)
+                          cardColor = const Color(0xFF2D2D44);
+                          borderColor = Colors.white24;
+                          textColor = Colors.white;
                         }
                       }
 
@@ -577,11 +592,12 @@ class _A320IceAndRainQuizWidgetState extends State<A320IceAndRainQuizWidget> {
                                 child: Text(
                                   optionText,
                                   style: TextStyle(
-                                    color: isSelected ||
-                                            (_isSubmitted && isCorrect)
-                                        ? Colors.white
-                                        : Colors.white70,
+                                    color:
+                                        textColor, // تم ربط لون النص بالمتغير الجديد
                                     fontSize: 15,
+                                    fontWeight: isSelected
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
                                   ),
                                 ),
                               ),
