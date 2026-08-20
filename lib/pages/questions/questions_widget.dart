@@ -137,6 +137,17 @@ class _QuestionsWidgetState extends State<QuestionsWidget> {
                     ),
                   ),
                 ),
+              if (FFAppState().Questions == 7.0)
+                Expanded(
+                  child: Container(
+                    width: double.infinity,
+                    height: double.infinity,
+                    child: custom_widgets.A320EnginesExamWidget(
+                      width: double.infinity,
+                      height: double.infinity,
+                    ),
+                  ),
+                ),
               if (FFAppState().Questions == 5.0)
                 Expanded(
                   child: Container(
@@ -154,17 +165,6 @@ class _QuestionsWidgetState extends State<QuestionsWidget> {
                     width: double.infinity,
                     height: double.infinity,
                     child: custom_widgets.A320ElectricalExamWidget(
-                      width: double.infinity,
-                      height: double.infinity,
-                    ),
-                  ),
-                ),
-              if (FFAppState().Questions == 7.0)
-                Expanded(
-                  child: Container(
-                    width: double.infinity,
-                    height: double.infinity,
-                    child: custom_widgets.A320EnginesExamWidget(
                       width: double.infinity,
                       height: double.infinity,
                     ),
@@ -236,23 +236,23 @@ class _QuestionsWidgetState extends State<QuestionsWidget> {
                     ),
                   ),
                 ),
-              if (FFAppState().Questions == 14.0)
-                Expanded(
-                  child: Container(
-                    width: double.infinity,
-                    height: double.infinity,
-                    child: custom_widgets.A320IceAndRainQuizWidget(
-                      width: double.infinity,
-                      height: double.infinity,
-                    ),
-                  ),
-                ),
               if (FFAppState().Questions == 15.0)
                 Expanded(
                   child: Container(
                     width: double.infinity,
                     height: double.infinity,
                     child: custom_widgets.A320OxygenQuizWidget(
+                      width: double.infinity,
+                      height: double.infinity,
+                    ),
+                  ),
+                ),
+              if (FFAppState().Questions == 14.0)
+                Expanded(
+                  child: Container(
+                    width: double.infinity,
+                    height: double.infinity,
+                    child: custom_widgets.A320IceAndRainQuizWidget(
                       width: double.infinity,
                       height: double.infinity,
                     ),
@@ -280,20 +280,13 @@ class _QuestionsWidgetState extends State<QuestionsWidget> {
                     ),
                   ),
                 ),
-              if (responsiveVisibility(
-                context: context,
-                phone: false,
-                tablet: false,
-                tabletLandscape: false,
-                desktop: false,
-              ))
-                FlutterFlowAdBanner(
-                  width: MediaQuery.sizeOf(context).width * 1.0,
-                  height: 50.0,
-                  showsTestAd: true,
-                  iOSAdUnitID: 'ca-app-pub-7880697829268273/3491877192',
-                  androidAdUnitID: 'ca-app-pub-7880697829268273/3083170315',
-                ),
+              FlutterFlowAdBanner(
+                width: MediaQuery.sizeOf(context).width * 1.0,
+                height: 50.0,
+                showsTestAd: true,
+                iOSAdUnitID: 'ca-app-pub-7880697829268273/3491877192',
+                androidAdUnitID: 'ca-app-pub-7880697829268273/3083170315',
+              ),
             ],
           ),
         ),
