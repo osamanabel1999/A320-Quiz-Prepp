@@ -76,6 +76,9 @@ dependency_overrides:
   intl: any
   webview_flutter: any
   webview_flutter_wkwebview: any
+  font_awesome_flutter: 11.0.0
+  page_transition: 2.2.2
+
 
 
 
