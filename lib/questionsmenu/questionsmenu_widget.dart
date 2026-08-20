@@ -203,13 +203,20 @@ class _QuestionsmenuWidgetState extends State<QuestionsmenuWidget> {
                   ),
                 ),
               ),
-              FlutterFlowAdBanner(
-                width: MediaQuery.sizeOf(context).width * 1.0,
-                height: 50.0,
-                showsTestAd: true,
-                iOSAdUnitID: 'ca-app-pub-7880697829268273/3491877192',
-                androidAdUnitID: 'ca-app-pub-7880697829268273/3083170315',
-              ),
+              if (responsiveVisibility(
+                context: context,
+                phone: false,
+                tablet: false,
+                tabletLandscape: false,
+                desktop: false,
+              ))
+                FlutterFlowAdBanner(
+                  width: MediaQuery.sizeOf(context).width * 1.0,
+                  height: 50.0,
+                  showsTestAd: true,
+                  iOSAdUnitID: 'ca-app-pub-7880697829268273/3491877192',
+                  androidAdUnitID: 'ca-app-pub-7880697829268273/3083170315',
+                ),
             ],
           ),
         ),
