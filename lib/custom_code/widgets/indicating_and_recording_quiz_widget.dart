@@ -519,14 +519,16 @@ class _IndicatingAndRecordingQuizWidgetState
 
   void _startTimer() {
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      setState(() {
-        if (_timeLeft > 0) {
-          _timeLeft--;
-        } else {
-          _timer.cancel();
-          _showResult = true;
-        }
-      });
+      if (mounted) {
+        setState(() {
+          if (_timeLeft > 0) {
+            _timeLeft--;
+          } else {
+            _timer.cancel();
+            _showResult = true;
+          }
+        });
+      }
     });
   }
 
@@ -554,17 +556,19 @@ class _IndicatingAndRecordingQuizWidgetState
     });
 
     Future.delayed(const Duration(seconds: 2), () {
-      if (_currentQuestionIndex < _questions.length - 1) {
-        setState(() {
-          _currentQuestionIndex++;
-          _selectedAnswerIndex = null;
-          _isAnswerChecked = false;
-        });
-      } else {
-        setState(() {
-          _showResult = true;
-          _timer.cancel();
-        });
+      if (mounted) {
+        if (_currentQuestionIndex < _questions.length - 1) {
+          setState(() {
+            _currentQuestionIndex++;
+            _selectedAnswerIndex = null;
+            _isAnswerChecked = false;
+          });
+        } else {
+          setState(() {
+            _showResult = true;
+            _timer.cancel();
+          });
+        }
       }
     });
   }
@@ -591,14 +595,23 @@ class _IndicatingAndRecordingQuizWidgetState
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
+            Text(
               "Quiz Completed!",
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: FlutterFlowTheme.of(context).headlineMedium.override(
+                        fontFamily: 'Readex Pro',
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: FlutterFlowTheme.of(context).primaryText,
+                      ) ??
+                  const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 20),
             Text(
               "Your Score: $_score / ${_questions.length}",
-              style: const TextStyle(fontSize: 20),
+              style: TextStyle(
+                fontSize: 20,
+                color: FlutterFlowTheme.of(context).primaryText,
+              ),
             ),
             const SizedBox(height: 30),
             ElevatedButton(
@@ -624,34 +637,47 @@ class _IndicatingAndRecordingQuizWidgetState
             children: [
               Text(
                 "Question ${_currentQuestionIndex + 1}/${_questions.length}",
-                style:
-                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: FlutterFlowTheme.of(context).primaryText,
+                ),
               ),
               Text(
                 _formatTime(_timeLeft),
                 style: const TextStyle(
-                    fontSize: 18,
-                    color: Colors.redAccent,
-                    fontWeight: FontWeight.bold),
+                  fontSize: 18,
+                  color: Colors.redAccent,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ],
           ),
           const SizedBox(height: 20),
           Text(
             currentQuestion['question'],
-            style: const TextStyle(fontSize: 18),
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              color: FlutterFlowTheme.of(context).primaryText,
+            ),
           ),
           const SizedBox(height: 20),
           ...List.generate(currentQuestion['options'].length, (index) {
             Color buttonColor = Colors.white;
+            Color textColor = Colors.black87; // ضمان وضوح النص في كل الحالات
+
             if (_isAnswerChecked) {
               if (index == currentQuestion['correctIndex']) {
-                buttonColor = Colors.green.shade200; // الإجابة الصحيحة
+                buttonColor = Colors.green.shade100;
+                textColor = Colors.green.shade900;
               } else if (index == _selectedAnswerIndex) {
-                buttonColor = Colors.red.shade200; // الإجابة الخاطئة
+                buttonColor = Colors.red.shade100;
+                textColor = Colors.red.shade900;
               }
             } else if (_selectedAnswerIndex == index) {
-              buttonColor = Colors.blue.shade100; // الاختيار قبل التأكيد
+              buttonColor = Colors.blue.shade100;
+              textColor = Colors.blue.shade900;
             }
 
             return Padding(
@@ -668,12 +694,23 @@ class _IndicatingAndRecordingQuizWidgetState
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
                     color: buttonColor,
-                    border: Border.all(color: Colors.grey),
+                    border: Border.all(
+                      color: _selectedAnswerIndex == index
+                          ? Colors.blue
+                          : Colors.grey.shade400,
+                      width: _selectedAnswerIndex == index ? 2 : 1,
+                    ),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
                     currentQuestion['options'][index],
-                    style: const TextStyle(fontSize: 16),
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: textColor, // تحديد لون الخط بوضوح لمنع اختفائه
+                      fontWeight: _selectedAnswerIndex == index
+                          ? FontWeight.bold
+                          : FontWeight.normal,
+                    ),
                   ),
                 ),
               ),
